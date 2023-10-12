@@ -29,22 +29,27 @@ export default function NavBar() {
               width: "auto",
               height: "64px",
               marginRight: "10px",
+              position: "absolute"
             }}
           />
-          <Button
-            variant="h6"
-            style={{ color: "Black" }}
-            onClick={() => handleNavigate("/")}
-          >
-            หน้าแรก
-          </Button>
-          <Button
-            variant="h6"
-            style={{ color: "Black" }}
-            onClick={() => handleNavigate("/history")}
-          >
-            ประวัติการนับ
-          </Button>
+          <div className="CenterAppbar">
+            <div className="CenterNav-Container">
+              <Button
+                variant="h6"
+                style={{ color: isHomeActive ? "#00aa9f":"black",border: isHomeActive ? "2px solid #00aa9f" : "", fontSize: "1.1em",borderRadius: "10px", }}
+                onClick={() => handleNavigate("/")}
+              >
+                หน้าแรก
+              </Button>
+              <Button
+                variant="h6"
+                style={{ color: isHistoryActive ? "#00aa9f":"black",border: isHistoryActive ? "2px solid #00aa9f" : "", fontSize: "1.1em" ,borderRadius: "10px",}}
+                onClick={() => handleNavigate("/history")}
+              >
+                ประวัติการนับ
+              </Button>
+            </div>
+          </div>
         </Toolbar>
       </AppBar>
     </Box>
