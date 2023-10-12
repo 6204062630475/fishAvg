@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Paper,Button } from "@mui/material";
+import { Paper, Button } from "@mui/material";
 import axios from "axios";
 import "./App.css";
 import Navbar from "./components/Navbar";
@@ -13,6 +13,8 @@ function App() {
   const [currentDateTime, setCurrentDateTime] = useState(
     dayjs().format("YYYY-MM-DD HH:mm:ss")
   );
+  const [loading, setLoading] = useState(false);
+
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -47,6 +49,7 @@ function App() {
   };
 
   async function captureFramesAndUpload() {
+    setLoading(true);
     const numFrames = 5;
     const frameArray = [];
     for (let i = 0; i < numFrames; i++) {
@@ -60,8 +63,10 @@ function App() {
       console.log("captureFramesAndUpload done..");
     } catch (error) {
       console.error("Error accessing webcam:", error);
+    } finally {
+      setLoading(false);
     }
-  } 
+  }
   useEffect(() => {
     startCamera();
   }, []);
@@ -90,7 +95,14 @@ function App() {
           sx={{ overflow: "hidden", borderRadius: "20px" }}
           className="CenterPaperApp"
         >
-          <h2 style={{ color: "black", display: "flex",justifyContent:"center",marginTop:"0px" }}>
+          <h2
+            style={{
+              color: "black",
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "0px",
+            }}
+          >
             <box-icon
               name="calendar"
               type="solid"
@@ -100,6 +112,14 @@ function App() {
             <span style={{ color: "gray" }}>{currentDateTime}</span>
           </h2>
           <video ref={videoRef} autoPlay playsInline></video>
+          {/* {loading && <div>Loading...</div>} */}
+          {loading && <div class="spinner-box">
+            <div class="pulse-container">
+              <div class="pulse-bubble pulse-bubble-1"></div>
+              <div class="pulse-bubble pulse-bubble-2"></div>
+              <div class="pulse-bubble pulse-bubble-3"></div>
+            </div>
+          </div>}
           <div className="count-container">
             <h1 className="count-text">จำนวน: {countNumber} ตัว</h1>
           </div>
