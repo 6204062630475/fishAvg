@@ -14,6 +14,7 @@ function App() {
     dayjs().format("YYYY-MM-DD HH:mm:ss")
   );
   const [loading, setLoading] = useState(false);
+  const [started, setstarted] = useState(false);
 
   const startCamera = async () => {
     try {
@@ -48,9 +49,9 @@ function App() {
     }
   };
 
-  async function captureFramesAndUpload() {
+  const captureFramesAndUpload = async () => {
     setLoading(true);
-    const numFrames = 5;
+    const numFrames = 10;
     const frameArray = [];
     for (let i = 0; i < numFrames; i++) {
       const base64String = captureFrame();
@@ -64,18 +65,26 @@ function App() {
     } catch (error) {
       console.error("Error accessing webcam:", error);
     } finally {
-      setLoading(false);
+      setLoading(false); // ตั้งค่า loading เป็น false เมื่อทำงานเสร็จสิ้น
     }
-  }
+  };
+
+  const handleStartCapture = () => {
+    setstarted(true);
+    captureFramesAndUpload();
+    const interval = setInterval(captureFramesAndUpload, 20000);
+    return () => clearInterval(interval);
+  };
   useEffect(() => {
     startCamera();
   }, []);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      captureFramesAndUpload();
-    }, 10000);
-    return () => clearInterval(interval);
-  }, []);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     captureFramesAndUpload();
+  //   }, 20000);
+  //   return () => clearInterval(interval);
+  // }, []);
   //นาฬิกา
   useEffect(() => {
     const interval = setInterval(() => {
@@ -109,21 +118,43 @@ function App() {
               color="gray"
               style={{ marginRight: "8px" }}
             />
-            <span style={{ color: "gray" }}>{currentDateTime}</span>
+            <span style={{ color: "gray", font:"" }}>{currentDateTime}</span>
           </h2>
           <video ref={videoRef} autoPlay playsInline></video>
-          {/* {loading && <div>Loading...</div>} */}
-          {loading && <div class="spinner-box">
-            <div class="pulse-container">
-              <div class="pulse-bubble pulse-bubble-1"></div>
-              <div class="pulse-bubble pulse-bubble-2"></div>
-              <div class="pulse-bubble pulse-bubble-3"></div>
+          {loading && (
+            <div class="spinner-box">
+              <div className="spinner-text" style={{marginRight:"1%",color:"#00aa9f"}}>
+                <h2>กำลังนับปลาหางนกยูง</h2>
+              </div>
+              <div class="pulse-container">
+                <div class="pulse-bubble pulse-bubble-1"></div>
+                <div class="pulse-bubble pulse-bubble-2"></div>
+                <div class="pulse-bubble pulse-bubble-3"></div>
+              </div>
             </div>
-          </div>}
-          <div className="count-container">
-            <h1 className="count-text">จำนวน: {countNumber} ตัว</h1>
-          </div>
-          {/* <Button onClick={captureFramesAndUpload}>startCapture</Button> */}
+          )}
+          {!loading && (
+            <div class="spinner-box">
+              <div class="pulse-container">
+                <br />
+              </div>
+            </div>
+          )}
+          {started && (
+            <div className="count-container">
+              <h1 className="count-text">จำนวน: {countNumber} ตัว</h1>
+            </div>
+          )}
+          {!started && (
+            <Button
+              onClick={handleStartCapture}
+              variant="contained"
+              size="large"
+              sx={{ marginTop: "1%" }}
+            >
+              เริ่มนับจำนวน
+            </Button>
+          )}
         </Paper>
       </div>
       <div style={{ position: "absolute", top: "86%", right: "1%" }}>

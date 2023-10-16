@@ -71,7 +71,7 @@ h1 {
 
 .spinner-box {
   
-  height: 40px;
+  height: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -92,7 +92,7 @@ h1 {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: #3ff9dc;
+  background-color: #00aa9f;
 }
 
 .pulse-bubble-1 {

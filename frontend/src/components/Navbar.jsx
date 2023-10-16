@@ -36,15 +36,17 @@ export default function NavBar() {
             <div className="CenterNav-Container">
               <Button
                 variant="h6"
-                style={{ color: isHomeActive ? "#00aa9f":"black",border: isHomeActive ? "2px solid #00aa9f" : "", fontSize: "1.1em",borderRadius: "10px", }}
+                style={{ color: isHomeActive ? "#00aa9f":"black",backgroundColor: isHomeActive ? "#CCEEEB" : "", fontSize: "1.1em",borderRadius: "10px"}}
                 onClick={() => handleNavigate("/")}
+                startIcon={<box-icon name='home' type='solid' color={isHomeActive ? '#00aa9f' : 'gray'}></box-icon>}
               >
                 หน้าแรก
               </Button>
               <Button
                 variant="h6"
-                style={{ color: isHistoryActive ? "#00aa9f":"black",border: isHistoryActive ? "2px solid #00aa9f" : "", fontSize: "1.1em" ,borderRadius: "10px",}}
+                style={{ color: isHistoryActive ? "#00aa9f":"black",backgroundColor: isHistoryActive ? "#CCEEEB" : "", fontSize: "1.1em" ,borderRadius: "10px",}}
                 onClick={() => handleNavigate("/history")}
+                startIcon={<box-icon name='history' color={isHistoryActive ? '#00aa9f' : 'gray'}></box-icon>}
               >
                 ประวัติการนับ
               </Button>
