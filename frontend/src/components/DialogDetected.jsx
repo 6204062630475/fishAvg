@@ -47,7 +47,7 @@ export default function AlertDialog() {
         maxWidth="xl"
       >
         <DialogTitle id="alert-dialog-title">
-          {"ภาพที่ได้จากการนับครั้งล่าสุด"}
+          {"ผลการตรวจจับ"}
         </DialogTitle>
         <DialogContent dividers>
           <DialogContentText id="alert-dialog-description">
